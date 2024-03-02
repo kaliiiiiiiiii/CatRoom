@@ -36,7 +36,7 @@ class Server:
 
         coro = []
         for ws in self.users.values():
-            coro.append(try_send(ws, {"user": user, "time": _time, "msg": message}))
+            coro.append(try_send(ws, {"cmd":"msg","user": user, "time": _time, "msg": message}))
         await asyncio.gather(*coro)
 
     async def ws_handler(self, request: web.Request):
@@ -56,9 +56,12 @@ class Server:
                             user = data.get("user")
                             if user and user in self.users.keys():
                                 await ws.send_json({"cmd": "err", "msg": "user_duplicate"})
-                                await self.on_msg("testCat", time.time(), "Hello?")
+
                             else:
                                 self.users[user] = ws
+
+                                # test message
+                                asyncio.ensure_future(self.on_msg("testCat", time.time(), "Hello?"))
                                 print(user)
                         elif data["cmd"] == "msg":
                             user = data["user"]
@@ -74,6 +77,10 @@ class Server:
             except KeyError:
                 pass
             raise e
+        try:
+            del self.users[user]
+        except KeyError:
+            pass
         return ws
 
 
