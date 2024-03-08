@@ -38,3 +38,23 @@ body {
   text-decoration: none;
   font-size: 1em;
 }
+
+input {
+    background-color: #444;
+    color: white;
+}
+
+input:focus {
+    outline: none;
+    border-color: white;
+}
+
+.username {
+    font-size: 1.2em;
+    margin-bottom: 0.5%;
+}
+
+.time-stamp {
+    font-size: 0.7em;
+    color: #ddd;
+}
