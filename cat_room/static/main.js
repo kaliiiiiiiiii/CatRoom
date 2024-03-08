@@ -1,3 +1,9 @@
+function uuid4() {
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
 class Connection {
   constructor() {
     // initiate connection
@@ -28,11 +34,11 @@ class Connection {
   async sendMessage(message){
     if(!(this.userName)){throw new Error("Not registered yet")}
     const timeStamp = new Date() / 1000 ;
-    this.socket.send(JSON.stringify({"cmd":"msg","user": this.userName, "time": timeStamp, "msg": message}));
+    this.socket.send(JSON.stringify({"cmd":"msg","user": this.userName, "time": timeStamp, "msg": message, "id":uuid4()}));
   }
-  onMessage(user, timeStamp, message){
+  onMessage(user, timeStamp, message, id){
     // visualize message here @micha
-    console.log(user, timeStamp, message)
+    console.log(user, timeStamp, message, id)
   }
   onJoin(user, timeStamp, status){
     if(user === this.userName){
@@ -49,7 +55,7 @@ class Connection {
     if (data["cmd"] === "err"){
         throw new Error(data["message"])
     } else if(data["cmd"] === "msg"){
-        this.onMessage(data["user"], data["time"], data["msg"])
+        this.onMessage(data["user"], data["time"], data["msg"], data["id"])
     }else if (data["cmd"] === "join"){
         var user = data["user"];
         var timeStamp = data["timeStamp"];

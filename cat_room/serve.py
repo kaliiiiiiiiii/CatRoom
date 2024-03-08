@@ -33,11 +33,11 @@ class Server:
     async def root(self, request: web.Request):
         raise web.HTTPFound("/index.html")
 
-    async def on_msg(self, user: str, _time: float, message: str):
+    async def on_msg(self, user: str, _time: float, message: str, _id:str):
 
         coro = []
         for ws in self.users.values():
-            coro.append(try_send(ws, {"cmd": "msg", "user": user, "time": _time, "msg": message}))
+            coro.append(try_send(ws, {"cmd": "msg", "user": user, "time": _time, "msg": message, "id":_id}))
         await asyncio.gather(*coro)
 
     async def on_joined(self, user):
@@ -73,9 +73,10 @@ class Server:
                             user = data["user"]
                             _time = data["time"]
                             msg = data["msg"]
+                            _id = data["id"]
 
                             print(f"{user}:{msg}")
-                            asyncio.ensure_future(self.on_msg(user, _time, msg))
+                            asyncio.ensure_future(self.on_msg(user, _time, msg, _id))
                         else:
                             raise ValueError(f"unexpected data from ws: {data}")
 
