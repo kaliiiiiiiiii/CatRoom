@@ -60,13 +60,14 @@ class Server:
                             else:
                                 self.users[user] = ws
 
-                                # test message
-                                asyncio.ensure_future(self.on_msg("testCat", time.time(), "Hello?"))
-                                print(user)
+                                # register
+                                print(f"{user} joined")
                         elif data["cmd"] == "msg":
                             user = data["user"]
                             _time = data["time"]
                             msg = data["msg"]
+
+                            print(f"{user}:{msg}")
                             asyncio.ensure_future(self.on_msg(user, _time, msg))
                         else:
                             raise ValueError(f"unexpected data from ws: {data}")
