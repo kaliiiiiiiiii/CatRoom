@@ -1,12 +1,18 @@
 import asyncio
 import json
 import os
-import traceback
 import typing
 import time
 
 from aiohttp import web
 import aiohttp
+
+
+async def try_send(_ws: web.WebSocketResponse, _data: dict):
+    try:
+        await _ws.send_json(_data)
+    except ConnectionResetError:
+        pass
 
 
 class Server:
@@ -28,15 +34,17 @@ class Server:
         raise web.HTTPFound("/index.html")
 
     async def on_msg(self, user: str, _time: float, message: str):
-        async def try_send(_ws: web.WebSocketResponse, _data: dict):
-            try:
-                await _ws.send_json(_data)
-            except ConnectionResetError:
-                pass
 
         coro = []
         for ws in self.users.values():
-            coro.append(try_send(ws, {"cmd":"msg","user": user, "time": _time, "msg": message}))
+            coro.append(try_send(ws, {"cmd": "msg", "user": user, "time": _time, "msg": message}))
+        await asyncio.gather(*coro)
+
+    async def on_joined(self, user):
+        _time = time.time()
+        coro = []
+        for ws in self.users.values():
+            coro.append(try_send(ws, {"cmd": "join", "user": user, "time": _time, "status":1}))
         await asyncio.gather(*coro)
 
     async def ws_handler(self, request: web.Request):
@@ -55,11 +63,10 @@ class Server:
                         if data["cmd"] == "register":
                             user = data.get("user")
                             if user and user in self.users.keys():
-                                await ws.send_json({"cmd": "err", "msg": "user_duplicate"})
-
+                                await try_send(ws, {"cmd": "join", "user": user, "time": time.time(), "status":0})
                             else:
                                 self.users[user] = ws
-
+                                asyncio.ensure_future(self.on_joined(user))
                                 # register
                                 print(f"{user} joined")
                         elif data["cmd"] == "msg":
