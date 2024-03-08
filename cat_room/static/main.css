@@ -12,14 +12,15 @@ body {
   height: 100vh; /* Full viewport height */
 }
 
-#content {
-  flex: 1; /* Expand to fill available space */
-}
-
-/* Styles for demo purposes */
 #bar, #content, input {
   padding: 20px;
   border: 1px solid black;
+}
+
+#content {
+    flex: 1; /* Expand to fill available space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 100px);
 }
 
 #bar {
