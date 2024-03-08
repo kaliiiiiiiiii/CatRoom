@@ -47,6 +47,14 @@ class Server:
             coro.append(try_send(ws, {"cmd": "join", "user": user, "time": _time, "status":1}))
         await asyncio.gather(*coro)
 
+    async def on_leave(self, user):
+        print(f"{user} left")
+        _time = time.time()
+        coro = []
+        for ws in self.users.values():
+            coro.append(try_send(ws, {"cmd": "leave", "user": user, "time": _time}))
+        await asyncio.gather(*coro)
+
     async def ws_handler(self, request: web.Request):
         ws = web.WebSocketResponse()
         await ws.prepare(request)
@@ -81,11 +89,13 @@ class Server:
                             raise ValueError(f"unexpected data from ws: {data}")
 
         except Exception as e:
+            asyncio.ensure_future(self.on_leave(user))
             try:
                 del self.users[user]
             except KeyError:
                 pass
             raise e
+        asyncio.ensure_future(self.on_leave(user))
         try:
             del self.users[user]
         except KeyError:

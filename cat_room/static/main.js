@@ -49,6 +49,9 @@ class Connection {
     }
     console.log(user, timeStamp, status)
   }
+  onLeave(user, timeStamp){
+    console.log(user)
+  }
   WSMessageHandler(event){
     // internal websocket message handler
     var data = JSON.parse(event.data)
@@ -62,6 +65,7 @@ class Connection {
         var timeStamp = data["timeStamp"];
         var status = data["status"];
         this.onJoin(user, timeStamp, status)
+    }else if (data["cmd"] == "leave"){this.onLeave(data["user"], data["time"])
     }else{
         console.error("received invalid data:",event.data)
       }
