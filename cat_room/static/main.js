@@ -31,6 +31,7 @@ class Connection {
         throw e
     }
   }
+
   async sendMessage(message){
     if(!(this.userName)){throw new Error("Not registered yet")}
     const timeStamp = new Date() / 1000 ;
