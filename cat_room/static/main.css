@@ -39,6 +39,17 @@ body {
   font-size: 1em;
 }
 
+#pop-up {
+    position: fixed;
+    top: 40%;
+    left: 35%;
+    width: 30%;
+}
+
+#username-input{
+    width: 80%;
+}
+
 input {
     background-color: #444;
     color: white;
@@ -57,4 +68,9 @@ input:focus {
 .time-stamp {
     font-size: 0.7em;
     color: #ddd;
+}
+
+.user-join {
+    font-size: 1.2em;
+    font-weight: bold;
 }
