@@ -6,4 +6,4 @@ Note: This is a school-project
 
 (as now)
 
-![img.png](assets/example_screenshot.png)
+![](assets/example_screenshot.png)
