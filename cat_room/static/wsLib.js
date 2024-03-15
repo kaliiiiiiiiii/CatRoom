@@ -62,10 +62,7 @@ class Connection {
         t.setSeconds(data["time"])
         this.onMessage(data["user"], t, data["msg"], data["id"])
     }else if (data["cmd"] === "join"){
-        var user = data["user"];
-        var timeStamp = data["timeStamp"];
-        var status = data["status"];
-        this.onJoinHelper(user, timeStamp, status)
+        this.onJoinHelper(data["user"], data["time"], data["status"])
     }else if (data["cmd"] == "leave"){
         var t = new Date(1970, 0, 1);
         t.setSeconds(data["time"])

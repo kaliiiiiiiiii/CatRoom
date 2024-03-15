@@ -2,7 +2,21 @@ function onMessage(user, timeStamp, message, id){
     let span = document.createElement("span")
     span.setAttribute("id", id)
     span.setAttribute("class", "message")
-    span.innerHTML = '<h4 class="username">' + user + '</h4><span class="message-content">' + message + '</span><span class="time-stamp">' + timeStamp + '</span>'
+
+    let userNameElem = document.createElement("h4")
+    userNameElem.setAttribute("class", "username")
+    userNameElem.textContent = user
+    span.append(userNameElem)
+
+    let messageElem = document.createElement("span")
+    messageElem.setAttribute("class","message-content")
+    messageElem.textContent = message
+    span.append(messageElem)
+
+    let timeElem = document.createElement("span")
+    messageElem.setAttribute("class","time-stamp")
+    timeElem.textContent = timeStamp.toLocaleString()
+    span.append(timeElem)
 
     content.append(span)
     console.log(user, timeStamp, message, id)
