@@ -15,5 +15,5 @@ async function main(){
     const con = new Connection(onJoin, onMessage, onLeave)
     await con.register("Cat-2235")
     await con.sendMessage("Hello?")
-}
+};
 main()
