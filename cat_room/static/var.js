@@ -1,2 +1,2 @@
 const content = document.getElementById("content")
-const inp = document.getElementById("inp").
+const inp = document.getElementById("inp");
