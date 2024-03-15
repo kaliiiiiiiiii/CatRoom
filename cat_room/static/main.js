@@ -23,13 +23,17 @@ async function main(){
         await con.register("Cat-2235");
     }catch(e){console.error(e)};
 
+    inp.addEventListener("keydown", (event) => {
+      if (event.key !== 'Enter') {
+        return;
+      };
+      var text = inp.value ;
+      con.sendMessage(text)
+        .catch(console.error)
+        .then(()=>{inp.value = ""})
+    });
     await con.sendMessage("Hello?");
 };
 main()
 
-inp.addEventListener("keydown", (event) => {
-  if (event.key !== 'Enter') {
-    return;
-  }
-  // @KALIIIIIIIIIII
-});
+
