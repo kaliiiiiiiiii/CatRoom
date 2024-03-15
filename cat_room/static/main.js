@@ -23,6 +23,9 @@ function onMessage(user, timeStamp, message, id){
 };
 
 function onJoin(user, timeStamp){
+
+    // todo @micha
+    // don't use `elem.innerHTML = ...`
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
@@ -74,7 +77,10 @@ async function main(){
         let username = username_input.value;
 
         con.register(username)
-            .then(()=>{popUp.style.display = 'none'})
+            .then(()=>{
+                popUp.style.display = 'none';
+                bar_username.textContent = username
+            })
             .catch((e)=>{
                 if(e.message == "Duplicate User!"){
                  // @Micha add user duplicate warning (html/css)
