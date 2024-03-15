@@ -14,7 +14,7 @@ function onMessage(user, timeStamp, message, id){
     span.append(messageElem)
 
     let timeElem = document.createElement("span")
-    messageElem.setAttribute("class","time-stamp")
+    timeElem.setAttribute("class","time-stamp")
     timeElem.textContent = timeStamp.toLocaleString()
     span.append(timeElem)
 
@@ -23,7 +23,31 @@ function onMessage(user, timeStamp, message, id){
 };
 
 function onJoin(user, timeStamp){
-    console.log(user, timeStamp)
+    let span = document.createElement("span")
+    span.setAttribute("class", "join")
+
+    let spanPrefix = document.createElement("span")
+    spanPrefix.setAttribute("class", "user-join-affix")
+    spanPrefix.innerHTML = ">> &nbsp"
+    span.append(spanPrefix)
+
+    let userNameElem = document.createElement("span")
+    userNameElem.setAttribute("class", "user-join")
+    userNameElem.textContent = user
+    span.append(userNameElem)
+
+    let spanAffix = document.createElement("span")
+    spanAffix.setAttribute("class", "user-join-affix")
+    spanAffix.innerHTML = " joined."
+    span.append(spanAffix)
+
+    let timeElem = document.createElement("span")
+    timeElem.setAttribute("class","time-stamp")
+    timeElem.textContent = timeStamp.toLocaleString()
+    span.append(timeElem)
+
+    content.append(span)
+    console.log(user)
 };
 
 function onLeave(user, timeStamp){

@@ -70,7 +70,28 @@ input:focus {
     color: #ddd;
 }
 
+.time-stamp::before {
+    content: " ";
+}
 .user-join {
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.user-join-affix, .user-join {
+    color: #5f5;
+}
+
+.user-leave {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.user-leave-affix, .user-leave {
+    color: #f55;
+}
+
+.join::before {
+    content: "\a\a";
+    white-space: pre;
 }

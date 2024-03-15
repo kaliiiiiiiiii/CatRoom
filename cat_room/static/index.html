@@ -12,14 +12,21 @@
         <div>USERNAME</div>
     </div>
     <div id="content">
-        <!-- <span id="example" class="message">
+        <span id="example" class="message">
             <h4 class="username">Example user</h4>
             <span class="message-content">This is the message content. Message content goes here.</span>
             <span class="time-stamp">11:23 AM</span>
-        </span> -->
+        </span>
         <span class="join">
+            <span class="user-join-affix">>&nbsp;</span>
             <span class="user-join">Cat-2235</span>
             <span class="user-join-affix">joined.</span>
+            <span class="time-stamp">11:23 AM</span>
+        </span>
+        <span class="join">
+            <span class="user-leave-affix">>&nbsp;</span>
+            <span class="user-leave">Cat-2235</span>
+            <span class="user-leave-affix">left.</span>
             <span class="time-stamp">11:23 AM</span>
         </span>
     </div>
@@ -30,7 +37,6 @@
     <center>
         Please enter your username:
         <input id="username-input"><br>
-        <button onClick="submit()">Submit</button>
     </center>
 </div>
 
