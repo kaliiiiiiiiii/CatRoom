@@ -50,4 +50,15 @@ async function main(){
 };
 main()
 
+function submit() {
+    let username = username_input.value
 
+    if(true) { // Add condition for taken usernames (@KALLIIII (?))
+        popUp.style.display = 'none';
+    } else {
+        // if username is taken (@MW)
+    }
+
+    // @ KALIIIIIIIIIIII
+    console.log(username)
+}
