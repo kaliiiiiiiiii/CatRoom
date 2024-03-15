@@ -32,10 +32,6 @@ function onLeave(user, timeStamp){
 
 async function main(){
     const con = new Connection(onJoin, onMessage, onLeave);
-    await con.register("Cat-2235");
-    try{
-        await con.register("Cat-2235");
-    }catch(e){console.error(e)};
 
     inp.addEventListener("keydown", (event) => {
       if (event.key !== 'Enter') {
@@ -46,19 +42,21 @@ async function main(){
         .catch(console.error)
         .then(()=>{inp.value = ""})
     });
-    await con.sendMessage("Hello?");
+
+    username_input.addEventListener("keydown", (event) => {
+        if (event.key !== 'Enter') {
+            return;
+          };
+        let username = username_input.value;
+
+        con.register(username)
+            .then(()=>{popUp.style.display = 'none'})
+            .catch((e)=>{
+                if(e.message == "Duplicate User!"){
+                 // @Micha add user duplicate warning (html/css)
+                }else{console.error(e)}
+            })
+        console.log(username)
+    })
 };
 main()
-
-function submit() {
-    let username = username_input.value
-
-    if(true) { // Add condition for taken usernames (@KALLIIII (?))
-        popUp.style.display = 'none';
-    } else {
-        // if username is taken (@MW)
-    }
-
-    // @ KALIIIIIIIIIIII
-    console.log(username)
-}
