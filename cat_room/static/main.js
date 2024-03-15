@@ -26,3 +26,10 @@ async function main(){
     await con.sendMessage("Hello?")
 };
 main()
+
+inp.addEventListener("keydown", (event) => {
+  if (event.key !== 'Enter') {
+    return;
+  }
+  // @KALIIIIIIIIIII
+});
