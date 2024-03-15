@@ -17,13 +17,13 @@ function onLeave(user, timeStamp){
 };
 
 async function main(){
-    const con = new Connection(onJoin, onMessage, onLeave)
-    await con.register("Cat-2235")
+    const con = new Connection(onJoin, onMessage, onLeave);
+    await con.register("Cat-2235");
     try{
-        await con.register("Cat-2235")
-    }catch(e){console.error(e)}
+        await con.register("Cat-2235");
+    }catch(e){console.error(e)};
 
-    await con.sendMessage("Hello?")
+    await con.sendMessage("Hello?");
 };
 main()
 

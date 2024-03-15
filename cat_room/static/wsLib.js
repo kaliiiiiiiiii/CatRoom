@@ -47,7 +47,9 @@ class Connection {
         if (status === 0){this.rejectRegister(new Error("Duplicate User!"))
         }else{this.resolveRegister(data)}
     }
-    this.onJoin(user, timeStamp)
+    var t = new Date(1970, 0, 1);
+    t.setSeconds(timeStamp)
+    this.onJoin(user, t)
   }
   WSMessageHandler(event){
     // internal websocket message handler
@@ -56,13 +58,18 @@ class Connection {
     if (data["cmd"] === "err"){
         throw new Error(data["message"])
     } else if(data["cmd"] === "msg"){
-        this.onMessage(data["user"], data["time"], data["msg"], data["id"])
+        var t = new Date(1970, 0, 1);
+        t.setSeconds(data["time"])
+        this.onMessage(data["user"], t, data["msg"], data["id"])
     }else if (data["cmd"] === "join"){
         var user = data["user"];
         var timeStamp = data["timeStamp"];
         var status = data["status"];
         this.onJoinHelper(user, timeStamp, status)
-    }else if (data["cmd"] == "leave"){this.onLeave(data["user"], data["time"])
+    }else if (data["cmd"] == "leave"){
+        var t = new Date(1970, 0, 1);
+        t.setSeconds(data["time"])
+        this.onLeave(data["user"], t)
     }else{
         console.error("received invalid data:",event.data)
       }
