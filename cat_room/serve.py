@@ -78,7 +78,6 @@ class Server:
                                 # register
                                 print(f"{user} joined")
                         elif data["cmd"] == "msg":
-                            user = data["user"]
                             _time = data["time"]
                             msg = data["msg"]
                             _id = data["id"]
