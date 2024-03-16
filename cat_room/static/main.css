@@ -21,6 +21,8 @@ body {
     flex: 1; /* Expand to fill available space */
     overflow-y: auto; /* Enable vertical scrolling */
     max-height: calc(100vh - 100px);
+    display: flex;
+    flex-flow: column;
 }
 
 #bar {
@@ -39,15 +41,44 @@ body {
   font-size: 1em;
 }
 
+#blur {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
 #pop-up {
     position: fixed;
     top: 40%;
-    left: 35%;
+    left: 33%;
     width: 30%;
+    text-align: center;
+    background-color: #333;
+    border: solid #444 2px;
+    border-radius: 10px;
+    padding: 2%;
+}
+
+#warning {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 34%;
+    width: 30%;
+    text-align: center;
+    background-color: #d00;
+    border: solid #444 2px;
+    border-radius: 10px;
+    padding: 1%;
 }
 
 #username-input{
     width: 80%;
+    background-color: #444;
 }
 
 input {
@@ -60,9 +91,15 @@ input:focus {
     border-color: white;
 }
 
+.message, .join {
+    margin-bottom: 1%;
+}
+
 .username {
     font-size: 1.2em;
     margin-bottom: 0.5%;
+    display: block;
+    font-weight: bold;
 }
 
 .time-stamp {
@@ -89,9 +126,4 @@ input:focus {
 
 .user-leave-affix, .user-leave {
     color: #f55;
-}
-
-.join::before {
-    content: "\a\a";
-    white-space: pre;
 }
