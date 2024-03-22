@@ -1,0 +1,1 @@
+- [ ] add border to message element

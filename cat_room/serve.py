@@ -1,9 +1,11 @@
 import asyncio
 import json
 import os
+import re
 import typing
 import time
 
+import orjson
 from aiohttp import web
 import aiohttp
 
@@ -20,9 +22,11 @@ class Server:
         self._static_dir = os.getcwd() + "/static"
         self.port = port
         self._host = host
+        self._match_user = re.compile(r"^\S{5,10}$")
 
         self.app = web.Application()
-        self.app.add_routes([web.get("/", self.root), web.get('/ws', self.ws_handler)])
+        self.app.add_routes(
+            [web.get("/", self.root), web.get('/ws', self.ws_handler), web.get('/get_users', self.get_users)])
         self.app.add_routes([web.static('/', self._static_dir)])
 
         self.users: typing.Dict[str, web.WebSocketResponse] = {}
@@ -33,18 +37,22 @@ class Server:
     async def root(self, request: web.Request):
         raise web.HTTPFound("/index.html")
 
-    async def on_msg(self, user: str, _time: float, message: str, _id:str):
+    async def on_msg(self, user: str, _time: float, message: str, _id: str):
 
         coro = []
         for ws in self.users.values():
-            coro.append(try_send(ws, {"cmd": "msg", "user": user, "time": _time, "msg": message, "id":_id}))
+            coro.append(try_send(ws, {"cmd": "msg", "user": user, "time": _time, "msg": message, "id": _id}))
         await asyncio.gather(*coro)
+
+    async def get_users(self, request: web.Request):
+        users = list(self.users.keys())
+        return web.Response(body=orjson.dumps({"main": users}))
 
     async def on_joined(self, user):
         _time = time.time()
         coro = []
         for ws in self.users.values():
-            coro.append(try_send(ws, {"cmd": "join", "user": user, "time": _time, "status":1}))
+            coro.append(try_send(ws, {"cmd": "join", "user": user, "time": _time, "status": 1}))
         await asyncio.gather(*coro)
 
     async def on_leave(self, user):
@@ -70,8 +78,10 @@ class Server:
                         data = json.loads(msg.data)
                         if data["cmd"] == "register":
                             user = data.get("user")
+                            if not self._match_user.match(user):
+                                pass
                             if user and user in self.users.keys():
-                                await try_send(ws, {"cmd": "join", "user": user, "time": time.time(), "status":0})
+                                await try_send(ws, {"cmd": "join", "user": user, "time": time.time(), "status": 0})
                             else:
                                 self.users[user] = ws
                                 asyncio.ensure_future(self.on_joined(user))
