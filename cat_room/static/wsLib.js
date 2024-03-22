@@ -46,10 +46,11 @@ class Connection {
         var data = {user:user, time:timeStamp, status:status}
         if (status === 0){this.rejectRegister(new Error("Duplicate User!"))
         }else{this.resolveRegister(data)}
+    }else{
+        var t = new Date(1970, 0, 1);
+        t.setSeconds(timeStamp)
+        if(status==1){this.onJoin(user, t)}
     }
-    var t = new Date(1970, 0, 1);
-    t.setSeconds(timeStamp)
-    this.onJoin(user, t)
   }
   WSMessageHandler(event){
     // internal websocket message handler
