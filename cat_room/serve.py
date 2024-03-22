@@ -22,7 +22,7 @@ class Server:
         self._static_dir = os.getcwd() + "/static"
         self.port = port
         self._host = host
-        self._match_user = re.compile(r"^\S{5,10}$")
+        self._match_user = re.compile(r"^\S{5,30}$")
 
         self.app = web.Application()
         self.app.add_routes(

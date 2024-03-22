@@ -121,7 +121,10 @@ async function main(){
             .catch((e)=>{
                 if(e.message == "Duplicate User!"){
                     warn.style.display = "block";
-                }else{console.error(e)}
+                }else if (e.message == "invalid username"){
+                    //todo @micha
+                }
+                else{console.error(e)}
             })
         console.log(username)
     })
