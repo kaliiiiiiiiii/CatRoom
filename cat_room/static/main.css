@@ -91,7 +91,7 @@ input:focus {
     border-color: white;
 }
 
-.message, .join {
+.message, .message-self, .join {
     margin-bottom: 1%;
 }
 
@@ -126,4 +126,9 @@ input:focus {
 
 .user-leave-affix, .user-leave {
     color: #f55;
+}
+
+.message-self {
+    align-self: end;
+    color: #ffa;
 }

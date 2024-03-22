@@ -1,12 +1,16 @@
 function onMessage(user, timeStamp, message, id){
     let span = document.createElement("span")
     span.setAttribute("id", id)
-    span.setAttribute("class", "message")
+    if(user !== username) {
+        span.setAttribute("class", "message")
 
-    let userNameElem = document.createElement("span")
-    userNameElem.setAttribute("class", "username")
-    userNameElem.textContent = user
-    span.append(userNameElem)
+        let userNameElem = document.createElement("span")
+        userNameElem.setAttribute("class", "username")
+        userNameElem.textContent = user
+        span.append(userNameElem)
+    } else {
+        span.setAttribute("class", "message-self")
+    }
 
     let messageElem = document.createElement("span")
     messageElem.setAttribute("class","message-content")
@@ -98,12 +102,13 @@ async function main(){
             warn.style.display = "none";
             return;
           };
-        let username = username_input.value;
+        username = username_input.value;
 
         con.register(username)
             .then(()=>{
                 popUp.style.display = 'none';
                 blur.style.display = 'none';
+                warn.style.display = "none";
                 bar_username.textContent = username
             })
             .catch((e)=>{
