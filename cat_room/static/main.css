@@ -91,8 +91,12 @@ input:focus {
     border-color: white;
 }
 
-.message, .message-self, .join {
-    margin-bottom: 1%;
+.message, .message-self, .message-w-username, .join {
+    margin-bottom: 3px;
+}
+
+.message-w-username {
+    margin-top: 8px;
 }
 
 .username {
@@ -105,11 +109,9 @@ input:focus {
 .time-stamp {
     font-size: 0.7em;
     color: #ddd;
+    margin-left: 6px;
 }
 
-.time-stamp::before {
-    content: " ";
-}
 .user-join {
     font-size: 1.2em;
     font-weight: bold;
@@ -153,4 +155,12 @@ input:focus {
 .textarea[contenteditable]:empty::before {
   content: "Message";
   color: gray;
+}
+
+.span_minor {
+    display: inline-block;
+    border: solid white 1px;
+    border-radius: 5px;
+    padding: 4px;
+    background-color: #444;
 }

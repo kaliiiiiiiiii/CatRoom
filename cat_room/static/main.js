@@ -1,15 +1,23 @@
 function onMessage(user, timeStamp, message, id){
-    let span = document.createElement("span")
-    span.setAttribute("id", id)
-    if(user !== username) {
-        span.setAttribute("class", "message")
 
+    let span = document.createElement("span")
+    span.setAttribute("class", "span_minor")
+
+    let span_wrapper = document.createElement("span")
+    span_wrapper.setAttribute("id", id)
+    if(user !== username && lastUser !== user) {
+        span_wrapper.setAttribute("class", "message")
+        span_wrapper.setAttribute("class", "message-w-username")
         let userNameElem = document.createElement("span")
         userNameElem.setAttribute("class", "username")
         userNameElem.textContent = user
         span.append(userNameElem)
+        lastUser = user
+    } else if(user == username) {
+        span_wrapper.setAttribute("class", "message-self")
+        lastUser = user
     } else {
-        span.setAttribute("class", "message-self")
+        span_wrapper.setAttribute("class", "message")
     }
 
     let messageElem = document.createElement("span")
@@ -21,12 +29,15 @@ function onMessage(user, timeStamp, message, id){
     timeElem.setAttribute("class","time-stamp")
     timeElem.textContent = timeStamp.toLocaleString()
     span.append(timeElem)
+    span_wrapper.append(span)
 
-    content.append(span)
+    content.append(span_wrapper)
     console.log(user, timeStamp, message, id)
 };
 
 function onJoin(user, timeStamp){
+    lastUser = ""
+
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
@@ -55,6 +66,7 @@ function onJoin(user, timeStamp){
 };
 
 function onLeave(user, timeStamp){
+    lastUser = ""
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
