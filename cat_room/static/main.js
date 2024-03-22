@@ -94,7 +94,7 @@ async function main(){
       var text = inp.value ;
       con.sendMessage(text)
         .catch(console.error)
-        .then(()=>{inp.value = ""})
+        .then(()=>{inp.value = ""; console.log(username, con.users)})
     });
 
     username_input.addEventListener("keydown", (event) => {

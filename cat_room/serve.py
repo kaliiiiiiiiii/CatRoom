@@ -46,7 +46,7 @@ class Server:
 
     async def get_users(self, request: web.Request):
         users = list(self.users.keys())
-        return web.Response(body=orjson.dumps({"main": users}))
+        return web.Response(body=json.dumps(users), content_type="application/json")
 
     async def on_joined(self, user):
         _time = time.time()

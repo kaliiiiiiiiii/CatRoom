@@ -6,7 +6,8 @@ function uuid4() {
 
 class Connection {
   constructor(onJoin, OnMessage,OnLeave) {
-
+    this.fetchUsers()
+    this.users = new Set([])
     this.onJoin = onJoin
     this.onMessage = onMessage
     this.onLeave = onLeave
@@ -36,6 +37,11 @@ class Connection {
         throw e
     }
   }
+  async fetchUsers(){
+    var request = await fetch("get_users");
+    this.users = new Set(await request.json());
+    return this.users
+  }
 
   async sendMessage(message){
     if(!(this.userName)){throw new Error("Not registered yet")}
@@ -46,11 +52,14 @@ class Connection {
     if(user === this.userName){
         var data = {user:user, time:timeStamp, status:status}
         if (status === 0){this.rejectRegister(new Error("Duplicate User!"))
-        }else{this.resolveRegister(data)}
+        }else{this.resolveRegister(data); this.users.add(user)}
     }else{
         var t = new Date(1970, 0, 1);
         t.setSeconds(timeStamp)
-        if(status==1){this.onJoin(user, t)}
+        if(status==1){
+            this.users.add(user);
+            this.onJoin(user, t);
+        }
     }
   }
   WSMessageHandler(event){
@@ -66,6 +75,7 @@ class Connection {
     }else if (data["cmd"] === "join"){
         this.onJoinHelper(data["user"], data["time"], data["status"])
     }else if (data["cmd"] == "leave"){
+        this.users.delete(userName)
         var t = new Date(1970, 0, 1);
         t.setSeconds(data["time"])
         this.onLeave(data["user"], t)
