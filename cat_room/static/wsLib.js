@@ -75,7 +75,7 @@ class Connection {
     }else if (data["cmd"] === "join"){
         this.onJoinHelper(data["user"], data["time"], data["status"])
     }else if (data["cmd"] == "leave"){
-        this.users.delete(userName)
+        this.users.delete(data["user"])
         var t = new Date(1970, 0, 1);
         t.setSeconds(data["time"])
         this.onLeave(data["user"], t)
