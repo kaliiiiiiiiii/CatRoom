@@ -1,4 +1,5 @@
 let username = ""
+let shift = false
 
 const content = document.getElementById("content")
 const inp = document.getElementById("inp");

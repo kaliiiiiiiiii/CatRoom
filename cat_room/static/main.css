@@ -12,7 +12,7 @@ body {
   height: 100vh; /* Full viewport height */
 }
 
-#bar, #content, input {
+#bar, #content, input, #inp {
   padding: 20px;
   border: 1px solid black;
 }
@@ -81,7 +81,7 @@ body {
     background-color: #444;
 }
 
-input {
+input, #inp {
     background-color: #444;
     color: white;
 }
@@ -131,4 +131,26 @@ input:focus {
 .message-self {
     align-self: end;
     color: #ffa;
+}
+
+#content-wrapper {
+    display: flex;
+    flex-direction: column;
+     height: 100vh;
+     width: 800px;
+    margin: auto;
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: y;
+  min-height: 40px;
+  line-height: 20px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "Message";
+  color: gray;
 }

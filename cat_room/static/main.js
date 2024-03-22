@@ -27,9 +27,6 @@ function onMessage(user, timeStamp, message, id){
 };
 
 function onJoin(user, timeStamp){
-
-    // todo @micha
-    // don't use `elem.innerHTML = ...`
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
@@ -88,10 +85,20 @@ async function main(){
     const con = new Connection(onJoin, onMessage, onLeave);
 
     inp.addEventListener("keydown", (event) => {
-      if (event.key !== 'Enter') {
+        if(event.key == "Shift") {
+            shift = true;
+        }
+    })
+
+    inp.addEventListener("keyup", (event) => {
+      if (event.key == "Shift") {
+        shift = false;
+      }
+      if (event.key !== 'Enter' || shift) {
         return;
       };
-      var text = inp.value ;
+      var text = inp.innerText;
+      inp.innerHTML = "";
       con.sendMessage(text)
         .catch(console.error)
         .then(()=>{inp.value = ""})
