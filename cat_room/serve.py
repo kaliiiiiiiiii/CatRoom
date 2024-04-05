@@ -38,6 +38,13 @@ class Server:
         raise web.HTTPFound("/index.html")
 
     async def on_msg(self, user: str, _time: float, message: str, _id: str):
+        visible = False
+        for char in message:
+            if not (char in ["\n", " ", "\t", '\xa0']):
+                visible = True
+                break
+        if not visible:
+            return
 
         coro = []
         for ws in self.users.values():

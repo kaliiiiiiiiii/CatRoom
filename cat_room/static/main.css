@@ -164,3 +164,7 @@ input:focus {
     padding: 4px;
     background-color: #444;
 }
+
+.message-content {
+    display: block
+}

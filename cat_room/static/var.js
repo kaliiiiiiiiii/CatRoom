@@ -1,6 +1,7 @@
 let username = ""
 let shift = false
 let lastUser = ""
+let lastTimeStampStr = ""
 
 const content = document.getElementById("content")
 const inp = document.getElementById("inp");
