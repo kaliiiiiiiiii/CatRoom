@@ -14,31 +14,23 @@ function onMessage(user, timeStamp, message, id){
         userNameElem.setAttribute("class", "username")
         userNameElem.textContent = user
         span.append(userNameElem)
-        lastUser = user
-
-        if (lastTimeStampStr !== timesStampStr){
-            lastTimeStampStr = timeStampStr
-            let timeElem = document.createElement("span")
-            timeElem.setAttribute("class","time-stamp")
-            timeElem.textContent = timeStampStr
-            span.append(timeElem)
-        }
 
     } else if(user == username) {
         span_wrapper.setAttribute("class", "message-self")
 
-        if (lastTimeStampStr !== timesStampStr){
-            lastTimeStampStr = timeStampStr
-            let timeElem = document.createElement("span")
-            timeElem.setAttribute("class","time-stamp")
-            timeElem.textContent = timeStampStr
-            span.append(timeElem)
-        }
-
-        lastUser = user
     } else {
         span_wrapper.setAttribute("class", "message")
     }
+
+    if(user !== lastUser || lastTimeStampStr !== timeStampStr) {
+        let timeElem = document.createElement("span")
+        timeElem.setAttribute("class","time-stamp")
+        timeElem.textContent = timeStampStr
+        span.append(timeElem)
+    }
+
+    lastUser = user
+    lastTimeStampStr = timeStampStr
 
     let messageElem = document.createElement("span")
     messageElem.setAttribute("class","message-content")
@@ -51,7 +43,7 @@ function onMessage(user, timeStamp, message, id){
     content.append(span_wrapper)
     console.log(user, timeStamp, message, id)
 
-    // Fix time for user receiving messages to display after waiting 1 min+ >> Assume we need add time in another if function
+    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
 };
 
 function onJoin(user, timeStamp){
@@ -82,6 +74,8 @@ function onJoin(user, timeStamp){
 
     content.append(span)
     console.log(user)
+
+    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
 };
 
 function onLeave(user, timeStamp){
@@ -110,6 +104,8 @@ function onLeave(user, timeStamp){
     span.append(timeElem)
 
     content.append(span)
+
+    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
 };
 
 async function main(){
@@ -131,6 +127,8 @@ async function main(){
         return;
       };
       inp.textContent = "";
+      content.scrollTo(0, content.scrollHeight);
+
     })
 
 
@@ -147,6 +145,7 @@ async function main(){
                 blur.style.display = 'none';
                 warn.style.display = "none";
                 bar_username.textContent = username
+
             })
             .catch((e)=>{
                 if(e.message == "Duplicate User!"){
@@ -155,7 +154,6 @@ async function main(){
                 }else if (e.message == "invalid username"){
                     warn.innerHTML = "Username should be between 5 - 30 chars without whitespaces"
                     warn_popUp()
-                    //todo @micha
                 }
                 else{console.error(e)}
             })

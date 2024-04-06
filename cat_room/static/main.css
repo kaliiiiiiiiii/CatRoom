@@ -104,6 +104,7 @@ input:focus {
     margin-bottom: 0.5%;
     display: block;
     font-weight: bold;
+    color: #aff;
 }
 
 .time-stamp {
@@ -135,10 +136,7 @@ input:focus {
     color: #ffa;
 }
 
-#content-wrapper {
-    display: flex;
-    flex-direction: column;
-     height: 100vh;
+#content, #inp {
      width: 800px;
     margin: auto;
 }
@@ -167,4 +165,21 @@ input:focus {
 
 .message-content {
     display: block
+}
+
+/* Scroll Bar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #555;
+}
+
+ ::-webkit-scrollbar-thumb {
+  background: #578;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #adf;
 }
