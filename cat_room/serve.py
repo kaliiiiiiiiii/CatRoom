@@ -26,7 +26,10 @@ class Server:
 
         self.app = web.Application()
         self.app.add_routes(
-            [web.get("/", self.root), web.get('/ws', self.ws_handler), web.get('/get_users', self.get_users)])
+            [web.get("/", self.root),
+             web.get('/ws', self.ws_handler),
+             web.get('/get_users', self.get_users)]
+        )
         self.app.add_routes([web.static('/', self._static_dir)])
 
         self.users: typing.Dict[str, web.WebSocketResponse] = {}
@@ -35,6 +38,7 @@ class Server:
         web.run_app(self.app, port=self.port, host=self._host)
 
     async def root(self, request: web.Request):
+        # redirect
         raise web.HTTPFound("/index.html")
 
     async def on_msg(self, user: str, _time: float, message: str, _id: str):
@@ -88,6 +92,7 @@ class Server:
                             if not self._match_user.match(user):
                                 pass
                             if user and user in self.users.keys():
+                                # duplicate
                                 await try_send(ws, {"cmd": "join", "user": user, "time": time.time(), "status": 0})
                             else:
                                 self.users[user] = ws
