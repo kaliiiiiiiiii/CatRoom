@@ -133,7 +133,6 @@ input:focus {
 
 .message-self {
     align-self: end;
-    color: #ffa;
 }
 
 #content, #inp {
@@ -161,6 +160,10 @@ input:focus {
     border-radius: 5px;
     padding: 4px;
     background-color: #444;
+}
+
+.message-self .span_minor {
+    border-color: #ffa;
 }
 
 .message-content {

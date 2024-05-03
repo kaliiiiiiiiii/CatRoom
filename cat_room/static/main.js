@@ -48,7 +48,7 @@ function onMessage(user, timeStamp, message, id){
     content.append(span_wrapper)
     console.log(user, timeStamp, message, id)
 
-    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
+    scroll()
 };
 
 function onJoin(user, timeStamp){
@@ -81,10 +81,14 @@ function onJoin(user, timeStamp){
     content.append(span)
     console.log(user)
 
-    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
+    scroll()
 };
 
 function onLeave(user, timeStamp){
+    if(!user) {
+        return;
+    }
+
     lastUser = ""
     let span = document.createElement("span")
     span.setAttribute("class", "join")
@@ -111,8 +115,14 @@ function onLeave(user, timeStamp){
 
     content.append(span)
 
-    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
+    scroll()
 };
+
+function scroll() {
+    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
+        content.scrollTo(0, content.scrollHeight);
+    }
+}
 
 async function main(){
     const con = new Connection(onJoin, onMessage, onLeave);
