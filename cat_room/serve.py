@@ -5,7 +5,7 @@ import re
 import typing
 import time
 
-import orjson
+import pathlib
 from aiohttp import web
 import aiohttp
 
@@ -19,7 +19,7 @@ async def try_send(_ws: web.WebSocketResponse, _data: dict):
 
 class Server:
     def __init__(self, port: int = 80, host=None):
-        self._static_dir = os.getcwd() + "/static"
+        self._static_dir = str(pathlib.Path(__file__).parent.resolve()) + "/static"
         self.port = port
         self._host = host
         self._match_user = re.compile(r"^\S{5,30}$")
