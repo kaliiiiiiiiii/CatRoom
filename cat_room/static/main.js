@@ -1,4 +1,5 @@
 function onMessage(user, timeStamp, message, id){
+    // message received
 
     let span = document.createElement("span")
     span.setAttribute("class", "span_minor")
@@ -8,6 +9,7 @@ function onMessage(user, timeStamp, message, id){
 
     var timeStampStr = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
     if(user !== username && lastUser !== user) {
+        // mesage from another 
         span_wrapper.setAttribute("class", "message")
         span_wrapper.setAttribute("class", "message-w-username")
         let userNameElem = document.createElement("span")
@@ -32,10 +34,13 @@ function onMessage(user, timeStamp, message, id){
     lastUser = user
     lastTimeStampStr = timeStampStr
 
-    let messageElem = document.createElement("span")
-    messageElem.setAttribute("class","message-content")
-    messageElem.textContent = message
-    span.append(messageElem)
+    // message element
+    for (line of message.split("\n")){
+        let messageElem = document.createElement("span")
+        messageElem.setAttribute("class","message-content")
+        messageElem.textContent = line
+        span.append(messageElem)
+    };
 
 
     span_wrapper.append(span)
@@ -47,6 +52,7 @@ function onMessage(user, timeStamp, message, id){
 };
 
 function onJoin(user, timeStamp){
+    // onJoin received
     lastUser = ""
 
     let span = document.createElement("span")
@@ -113,6 +119,7 @@ async function main(){
     username_input.focus()
 
     inp.addEventListener("keydown", (event) => {
+      // send message
       if ((event.key === 'Enter'  && event.shiftKey) || event.key !== 'Enter') {
         return;
       };
@@ -123,6 +130,7 @@ async function main(){
         .then(()=>{console.log(username, con.users);inp.focus()})
     });
     inp.addEventListener("keyup",(event)=>{
+      // after message sent
       if ((event.key === 'Enter'  && event.shiftKey) || event.key !== 'Enter') {
         return;
       };
@@ -133,6 +141,7 @@ async function main(){
 
 
     username_input.addEventListener("keydown", (event) => {
+        // register
         if (event.key !== 'Enter') {
             warn.style.display = "none";
             return;
