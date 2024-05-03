@@ -1,6 +1,5 @@
 import asyncio
 import json
-import os
 import re
 import typing
 import time
@@ -67,7 +66,8 @@ class Server:
         await asyncio.gather(*coro)
 
     async def on_leave(self, user):
-        print(f"{user} left")
+        if user:
+            print(f"{user} left")
         _time = time.time()
         coro = []
         for ws in self.users.values():
