@@ -165,14 +165,20 @@ input:focus {
     border-radius: 5px;
     padding: 4px;
     background-color: #444;
+    max-width: 100%; /* Now it can't be over 100% */
 }
 
 .message-self .span_minor {
     border-color: #ffa;
 }
 
+.message-self, .message-w-username, .message {
+    max-width: 80%;
+}
+
 .message-content {
-    display: block
+    display: block;
+    overflow-wrap: break-word;
 }
 
 /* Scroll Bar */
