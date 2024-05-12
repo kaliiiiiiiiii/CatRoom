@@ -21,7 +21,7 @@ class Server:
         self._static_dir = str(pathlib.Path(__file__).parent.resolve()) + "/static"
         self.port = port
         self._host = host
-        self._match_user = re.compile(r"^\S{5,30}$")
+        self._match_user = re.compile(r"/^(?![\r\n\t\f\v ])(?!.*\s)(.{5,30})$")
 
         self.app = web.Application()
         self.app.add_routes(

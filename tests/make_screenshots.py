@@ -44,8 +44,8 @@ async def reset_emulation(tab: Target):
 
 async def main():
     url = "http://localhost"
-    usernames = ["Cat21434", "Cat21435"]
-    messages = (["Hello there", "How are you?"], ["I'm good, thanks", "hbu?"])
+    usernames = ["Cat1😼", "Cat2😾"]
+    messages = (["Hello there", "How are you?"], ["I'm good, thanks 😀", "hbu?"])
 
     options = webdriver.ChromeOptions()
     options.headless = True
@@ -59,6 +59,8 @@ async def main():
             username_inp = await tab.find_element(By.ID, "username-input", timeout=5)
             await asyncio.sleep(0.5)
 
+            await username_inp.write(username)
+
             if idx == 0:
                 await tab.save_screenshot(assets + "/register_screenshot.png")
                 await emulate_mobile(tab)
@@ -66,12 +68,10 @@ async def main():
                 await tab.save_screenshot(assets + "/register_screenshot_mobile.png")
                 await reset_emulation(tab)
 
-            await username_inp.send_keys(username)
             await enter(tab)
 
             await asyncio.sleep(1)
             idx += 1
-
         for messages, tab in zip(messages, tabs):
             tab: Target
 
@@ -80,8 +80,11 @@ async def main():
                 await inp.write(message)
                 await enter(tab)
                 await asyncio.sleep(1)
-        await tabs[0].save_screenshot(assets + "/example_screenshot.png")
 
+        inp = await tabs[0].find_element(By.ID, "inp", timeout=2)
+        await inp.write("My gf left me 😢")
+
+        await tabs[0].save_screenshot(assets + "/example_screenshot.png")
         await emulate_mobile(tabs[0])
         await asyncio.sleep(1)
         await tabs[0].save_screenshot(assets + "/example_screenshot_mobile.png")
