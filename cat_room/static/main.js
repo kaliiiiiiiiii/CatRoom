@@ -1,6 +1,12 @@
 function onMessage(user, timeStamp, message, id){
     // message received
 
+    let _scroll = false
+
+    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
+        _scroll = true
+    }
+
     let span = document.createElement("span")
     span.setAttribute("class", "span_minor")
 
@@ -48,12 +54,20 @@ function onMessage(user, timeStamp, message, id){
     content.append(span_wrapper)
     console.log(user, timeStamp, message, id)
 
-    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
+    if (_scroll) {
+        scroll()
+    }
 };
 
 function onJoin(user, timeStamp){
     // onJoin received
     lastUser = ""
+
+    let _scroll = false
+
+    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50 || user === lastUser) {
+        _scroll = true
+    }
 
     let span = document.createElement("span")
     span.setAttribute("class", "join")
@@ -81,10 +95,22 @@ function onJoin(user, timeStamp){
     content.append(span)
     console.log(user)
 
-    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
+    if (_scroll) {
+        scroll()
+    }
 };
 
 function onLeave(user, timeStamp){
+    if(!user) {
+        return;
+    }
+
+    let _scroll = false
+
+    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
+        _scroll = true
+    }
+
     lastUser = ""
     let span = document.createElement("span")
     span.setAttribute("class", "join")
@@ -111,8 +137,14 @@ function onLeave(user, timeStamp){
 
     content.append(span)
 
-    content.scrollTo(0, content.scrollHeight); // BUG: Add condition when away from bottom, e.g. looking at previous messages.
+    if (_scroll) {
+        scroll()
+    }
 };
+
+function scroll() {
+        content.scrollTo(0, content.scrollHeight);
+}
 
 async function main(){
     const con = new Connection(onJoin, onMessage, onLeave);
@@ -123,6 +155,7 @@ async function main(){
       if ((event.key === 'Enter'  && event.shiftKey) || event.key !== 'Enter') {
         return;
       };
+      event.preventDefault();
       var text = inp.innerText;
       inp.textContent = "";
       con.sendMessage(text)
@@ -134,9 +167,7 @@ async function main(){
       if ((event.key === 'Enter'  && event.shiftKey) || event.key !== 'Enter') {
         return;
       };
-      inp.textContent = "";
       content.scrollTo(0, content.scrollHeight);
-
     })
 
 
@@ -153,6 +184,7 @@ async function main(){
                 popUp.style.display = 'none';
                 blur.style.display = 'none';
                 warn.style.display = "none";
+                inp.focus()
                 bar_username.textContent = username
 
             })
