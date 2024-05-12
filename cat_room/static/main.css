@@ -53,21 +53,25 @@ body {
 
 #pop-up {
     position: fixed;
-    top: 40%;
-    left: 33%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 30%;
+    min-width: 200px;
+    min-height: 50px;
     text-align: center;
     background-color: #333;
     border: solid #444 2px;
     border-radius: 10px;
-    padding: 2%;
+    padding: 14px;
 }
 
 #warning {
     display: none;
     position: fixed;
-    top: 30%;
-    left: 34%;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -100%);
     width: 30%;
     text-align: center;
     background-color: #d00;
