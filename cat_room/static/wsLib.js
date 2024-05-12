@@ -27,7 +27,7 @@ class Connection {
   }
   async register(userName){
     // register user
-    if (!userName.match("^\\S{5,30}$")){throw new Error("invalid username")}
+    if (!userName.match(/^(?![\r\n\t\f\v ])(?!.*\s)(.{5,30})$/gm)){throw new Error("invalid username")}
     await this.waitOpen;
     this.userName = userName
     this.socket.send(JSON.stringify({"cmd":"register", "user":userName}));

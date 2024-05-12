@@ -31,8 +31,14 @@ then, open http://localhost to view the chatroom
 
 
 
-### Example screenshot
+### Example screenshots
 
-(as now)
+#### Desktop
+<img src="assets/register_screenshot.png" width="100%"/>
+<img src="assets/example_screenshot.png" width="100%"/>
 
-![](assets/example_screenshot.png)
+#### Mobile
+<p float="left">
+    <img src="assets/register_screenshot_mobile.png" width="49%"/>
+    <img src="assets/example_screenshot_mobile.png" width="49%"/>
+</p>
