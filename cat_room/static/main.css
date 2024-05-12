@@ -86,6 +86,11 @@ input, #inp {
     color: white;
 }
 
+#inp {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
 input:focus {
     outline: none;
     border-color: white;
