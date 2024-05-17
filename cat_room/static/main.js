@@ -186,7 +186,7 @@ async function main(){
                 warn.style.display = "none";
                 inp.focus()
                 bar_username.textContent = username
-                console.log(connection.users)
+
             })
             .catch((e)=>{
                 if(e.message == "Duplicate User!"){
