@@ -6,7 +6,7 @@ body {
   margin: 0;
 }
 
-#wrap {
+#main, #wrapper-messages {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Full viewport height */
