@@ -199,6 +199,7 @@ input:focus {
     display: block;
     overflow-wrap: break-word;
     min-height: 1em;
+    bottom-border: 1px dashed #4b4b4b;
 }
 
 /* Scroll Bar */
