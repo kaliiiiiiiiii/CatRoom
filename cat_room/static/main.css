@@ -198,6 +198,7 @@ input:focus {
 .message-content {
     display: block;
     overflow-wrap: break-word;
+    min-height: 1em;
 }
 
 /* Scroll Bar */
