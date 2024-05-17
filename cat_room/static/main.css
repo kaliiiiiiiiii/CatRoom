@@ -6,13 +6,47 @@ body {
   margin: 0;
 }
 
-#main, #wrapper-messages {
+#main {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+#wrapper-messages, #wrapper-users {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Full viewport height */
 }
 
-#bar, #content, input, #inp {
+#wrapper-messages {
+    width: 70%;
+}
+
+#wrapper-users {
+    word-wrap: break-word;
+    width: 30%;
+}
+
+#userList {
+    overflow-y: auto;
+}
+
+@media screen and (max-aspect-ratio: 3 / 2) {
+    #wrapper-users {
+        display: none !important;
+    }
+    #wrapper-messages {
+        width: 100% !important;
+    }
+}
+
+#bar_username {
+    padding: 5% 0;
+    text-align: center;
+    background-color: #232323;
+}
+
+#content, input, #inp {
   padding: 20px;
   border: 1px solid black;
 }
@@ -23,22 +57,6 @@ body {
     max-height: calc(100vh - 100px);
     display: flex;
     flex-flow: column;
-}
-
-#bar {
-  background-color: #222;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-#bar div {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 2% 3%;
-  text-decoration: none;
-  font-size: 1em;
 }
 
 #blur {
@@ -144,10 +162,7 @@ input:focus {
     align-self: end;
 }
 
-#content, #inp {
-     width: 70%;
-    margin: auto;
-}
+
 
 .textarea {
   display: block;
