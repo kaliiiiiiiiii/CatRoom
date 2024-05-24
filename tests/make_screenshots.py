@@ -25,7 +25,7 @@ from selenium_driverless.types.target import Target
 
 assets = str(pathlib.Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/assets"))
 
-server = Server(port=80, host="localhost")
+server = Server(port=8080, host="localhost")
 
 
 async def enter(tab: Target):
@@ -59,7 +59,7 @@ async def reset_emulation(tab: Target):
 
 
 async def main():
-    url = "http://localhost"
+    url = "http://localhost:8080"
     usernames = ["Cat1😼", "Cat2😾"]
     messages = (["Hello there", "How are you?"], ["I'm good, thanks 😀", "hbu?"])
 
