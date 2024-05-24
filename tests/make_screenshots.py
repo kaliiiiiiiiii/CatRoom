@@ -2,6 +2,15 @@
 generates screenshots for README.md
 """
 
+import os
+import sys
+import inspect
+
+# add / to python path (for imports)
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
 import asyncio
 import multiprocessing
 import time
@@ -20,7 +29,7 @@ server = Server(port=80, host="localhost")
 
 
 async def enter(tab: Target):
-    ## press enter on a TAB
+    # press enter on a TAB
     await asyncio.sleep(0.05)
     # press enter
     key_event = {
