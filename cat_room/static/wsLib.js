@@ -15,7 +15,11 @@ class Connection {
     this.onMessage = onMessage
     this.onLeave = onLeave
     // initiate connection
-    this.socket = new WebSocket(`ws://${window.location.host}/ws`);
+    var protocol = "ws://"
+    if (location.protocol === 'https:') {
+        var protocol = "wss://"
+    }
+    this.socket = new WebSocket(protocol+window.location.host+"/ws");
 
     // wrap "open" and "close" into a promise (=> async)
     this.waitOpen = new Promise((resolve, reject) => {
