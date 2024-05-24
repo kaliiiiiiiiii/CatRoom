@@ -45,10 +45,6 @@ class Server:
         self.port = port
         self._host = host
 
-        # userName cannot include invisible characters
-        # and has to be between 5 and 30 letters long
-        self._match_user = re.compile(r"/^(?![\r\n\t\f\v ])(?!.*\s)(.{5,30})$")
-
         self.app = web.Application()
         self.app.add_routes(
             [web.get("/", self.root),
