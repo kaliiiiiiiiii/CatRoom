@@ -10,6 +10,22 @@ import pathlib
 from aiohttp import web
 import aiohttp
 
+invisible_chars = list([char for char in
+                        u"\u000A\u000B\u000C\u000D\u0009\u0020\u0085\u00A0\u00AD\u034F"
+                        u"\u061C\u115F\u1160\u17B4\u17B5\u180E\u2000\u2001\u2002\u2003"
+                        u"\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D"
+                        u"\u200E\u200F\u2028\u2029\u202F\u205F\u2060\u2061\u2062\u2063"
+                        u"\u2064\u206A\u206B\u206C\u206D\u206E\u206F\u3000\u2800\u3164"
+                        u"\uFEFF\uFFA0"])
+
+
+def is_visible(string: str) -> bool:
+    # test if string contains visible characters
+    for char in string:
+        if not (char in invisible_chars):
+            return True
+    return False
+
 
 async def try_send(_ws: web.WebSocketResponse, _data: dict) -> None:
     # try to send a message to a websocket, suppresses ConnectionResetError
@@ -55,14 +71,7 @@ class Server:
 
     async def on_msg(self, user: str, _time: float, message: str, _id: str) -> None:
         """on message received handler"""
-
-        # return if there aren't any visible characters in the message
-        visible = False
-        for char in message:
-            if not (char in ["\n", " ", "\t", '\xa0']):
-                visible = True
-                break
-        if not visible:
+        if not is_visible(message):
             return
 
         # broadcast message to all users
@@ -71,12 +80,13 @@ class Server:
             coro.append(try_send(ws, {"cmd": "msg", "user": user, "time": _time, "msg": message, "id": _id}))
         await asyncio.gather(*coro)
 
+    # noinspection PyUnusedLocal
     async def get_users(self, request: web.Request) -> web.Response:
         """/get_users REST endpoint"""
         users = list(self.users.keys())
         return web.Response(body=json.dumps(users), content_type="application/json")
 
-    async def on_joined(self, user:str) -> None:
+    async def on_joined(self, user: str) -> None:
         """
         Gets called when a user joined
         """
@@ -88,7 +98,7 @@ class Server:
             coro.append(try_send(ws, {"cmd": "join", "user": user, "time": _time, "status": 1}))
         await asyncio.gather(*coro)
 
-    async def on_leave(self, user:str) -> None:
+    async def on_leave(self, user: str) -> None:
         """
         gets called when a user leaves (=> disconnects)
         """
@@ -122,13 +132,12 @@ class Server:
                         if data["cmd"] == "register":
                             # a user wants to register
                             user = data.get("user")
-                            if not self._match_user.match(user):
-                                # r"/^(?![\r\n\t\f\v ])(?!.*\s)(.{5,30})$"
+                            if len(user) < 5 or len(user) > 20 or (not is_visible(user)):
                                 # userName cannot include invisible characters
                                 # and has to be between 5 and 30 letters long
-                                pass
+                                pass  # ignore
 
-                            if user and user in self.users.keys():
+                            elif user and user in self.users.keys():
                                 # report status:0 to indicate duplicate
                                 await try_send(ws, {"cmd": "join", "user": user, "time": time.time(), "status": 0})
                             else:
