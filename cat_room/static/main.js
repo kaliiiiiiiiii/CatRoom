@@ -9,17 +9,19 @@ function onMessage(user, timeStamp, message, id){
 
     let span = document.createElement("span")
     span.setAttribute("class", "span_minor")
+    span.setAttribute("style", "border-color:" + userColors[user]);
 
     let span_wrapper = document.createElement("span")
     span_wrapper.setAttribute("id", id)
 
     var timeStampStr = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
     if(user !== username && lastUser !== user) {
-        // mesage from another 
+        // message from another
         span_wrapper.setAttribute("class", "message")
         span_wrapper.setAttribute("class", "message-w-username")
         let userNameElem = document.createElement("span")
         userNameElem.setAttribute("class", "username")
+        userNameElem.setAttribute("style", "color:" + userColors[user]);
         userNameElem.textContent = user
         span.append(userNameElem)
 
@@ -96,8 +98,11 @@ function onJoin(user, timeStamp){
 
     // Add to userList
 
+    userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
+
     span = document.createElement("span");
     span.setAttribute("class", "user");
+    span.setAttribute("style", "color:" + userColors[user]);
     span.textContent = user;
     userList.append(span);
     console.log(user)
@@ -108,51 +113,57 @@ function onJoin(user, timeStamp){
 };
 
 function onLeave(user, timeStamp){
-    if(!user) {
-        return;
-    }
+    try{
+        if(!user) {
+            return;
+        }
 
-    let _scroll = false
+        let _scroll = false
 
-    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
-        _scroll = true
-    }
+        if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
+            _scroll = true
+        }
 
-    lastUser = ""
-    let span = document.createElement("span")
-    span.setAttribute("class", "join")
+        lastUser = ""
+        let span = document.createElement("span")
+        span.setAttribute("class", "join")
 
-    let spanPrefix = document.createElement("span")
-    spanPrefix.setAttribute("class", "user-leave-affix")
-    spanPrefix.innerHTML = "> &nbsp;"
-    span.append(spanPrefix)
+        let spanPrefix = document.createElement("span")
+        spanPrefix.setAttribute("class", "user-leave-affix")
+        spanPrefix.innerHTML = "> &nbsp;"
+        span.append(spanPrefix)
 
-    let userNameElem = document.createElement("span")
-    userNameElem.setAttribute("class", "user-leave")
-    userNameElem.textContent = user
-    span.append(userNameElem)
+        let userNameElem = document.createElement("span")
+        userNameElem.setAttribute("class", "user-leave")
+        userNameElem.textContent = user
+        span.append(userNameElem)
 
-    let spanAffix = document.createElement("span")
-    spanAffix.setAttribute("class", "user-leave-affix")
-    spanAffix.innerHTML = " left."
-    span.append(spanAffix)
+        let spanAffix = document.createElement("span")
+        spanAffix.setAttribute("class", "user-leave-affix")
+        spanAffix.innerHTML = " left."
+        span.append(spanAffix)
 
-    let timeElem = document.createElement("span")
-    timeElem.setAttribute("class","time-stamp")
-    timeElem.textContent = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
-    span.append(timeElem)
+        let timeElem = document.createElement("span")
+        timeElem.setAttribute("class","time-stamp")
+        timeElem.textContent = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+        span.append(timeElem)
 
-    content.append(span)
+        content.append(span)
 
-    // Remove from userList
-    let u = document.getElementsByClassName("user")
-    for(let i in u) {
-        if(u[i].innerHTML !== user) {continue;}
-        u[i].parentNode.removeChild(u[i]);
-    }
+        // Remove from userList
+        let u = document.getElementsByClassName("user")
+        for(let i in u) {
+            if(u[i].innerHTML !== user) {continue;}
+            u[i].parentNode.removeChild(u[i]);
+        }
+        delete userColors[user];
 
-    if (_scroll) {
+        if (_scroll) {
         scroll()
+        }
+    }catch(e){
+        delete userColors[user];
+        throw e
     }
 };
 
@@ -201,15 +212,16 @@ async function main(){
                 inp.focus()
                 bar_username.textContent = username
                 con.fetchUsers().then((users)=>{
-                    for(let i of users) {
-                        if(i == username) {continue;}
+                    for(let user of users) {
+                        if(user == username) {continue;}
+                        userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
+
                         let span = document.createElement("span");
                         span.setAttribute("class", "user");
-                        span.textContent = i;
+                        span.setAttribute("style", "color:" + userColors[user]);
+                        span.textContent = user;
                         userList.append(span);
-                        console.log(i);
-
-                        userColors[user] = 0;
+                        console.log(user);
                     }
                 })
 
