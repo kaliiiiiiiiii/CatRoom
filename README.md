@@ -4,7 +4,7 @@ Note: This is a school-project
 
 #### Dependencies
 
-- [Python >= 3.7](https://www.python.org/downloads/)
+- [Python ~= 3.10](https://www.python.org/downloads/release/python-31011/)
 
 #### Startup server
 download with
@@ -13,7 +13,8 @@ git clone kaliiiiiiiiii/CatRoom
 cd CatRoom
 ```
 
-start server from cmd
+start server from cmd \
+(serves on all interfaces => `LAN`//`WLAN`)
 ```shell
 python main.py
 ```
@@ -26,8 +27,9 @@ if __name__ == "__main__":
     server = Server(port=80, host="localhost")
     server.serve()
 ```
+this serves **on `localhost` only**. To expose the port to `LAN`//`WLAN`, use `host="0.0.0.0"` instead
 
-then, open http://localhost to view the chatroom
+then, open [localhost](http://localhost) to view the chatroom
 
 
 
