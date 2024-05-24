@@ -6,6 +6,8 @@ on:
 
 jobs:
   Screenshot:
+    permissions:
+      contents: write
     strategy:
       matrix:
         os: [ ubuntu-latest ]
