@@ -9,6 +9,8 @@ class Connection {
   // the frontend Connection
   constructor(onJoin, OnMessage,OnLeave) {
     // onJoin:Callable[user:str, timeStamp:float]
+    // OnMessage:Callable[user:str, timeStamp:float, message:str, id:str]
+    // onLeave:Callable[user, timeStamp]
     this.fetchUsers()
     this.users = new Set([])
     this.onJoin = onJoin
