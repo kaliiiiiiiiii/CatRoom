@@ -1,7 +1,14 @@
+"""
+Server bound on all interfaces (=> exposed to LAN//WLAN)
+"""
+
 from cat_room.serve import Server
 
 
-def get_ip():
+def get_ip() -> str:
+    """
+    gets the current LAN IP
+    """
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))

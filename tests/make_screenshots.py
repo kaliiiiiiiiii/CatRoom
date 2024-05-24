@@ -1,3 +1,7 @@
+"""
+generates screenshots for README.md
+"""
+
 import asyncio
 import multiprocessing
 import time
@@ -16,6 +20,7 @@ server = Server(port=80, host="localhost")
 
 
 async def enter(tab: Target):
+    ## press enter on a TAB
     await asyncio.sleep(0.05)
     # press enter
     key_event = {
@@ -32,6 +37,7 @@ async def enter(tab: Target):
 
 
 async def emulate_mobile(tab: Target):
+    # emulates a mobile view on a tab
     await tab.execute_cdp_cmd("Emulation.setDeviceMetricsOverride",
                               {"mobile": True, "width": 384, "height": 700,
                                "deviceScaleFactor": 4,
@@ -39,6 +45,7 @@ async def emulate_mobile(tab: Target):
 
 
 async def reset_emulation(tab: Target):
+    # reset mobile view emulation for a tab
     await tab.execute_cdp_cmd("Emulation.clearDeviceMetricsOverride")
 
 
@@ -48,8 +55,9 @@ async def main():
     messages = (["Hello there", "How are you?"], ["I'm good, thanks 😀", "hbu?"])
 
     options = webdriver.ChromeOptions()
-    options.headless = True
+    options.headless = True  # => don't create a window
     async with webdriver.Chrome(options=options) as driver:
+        # start chrome
         tabs: typing.List[Target] = [await driver.new_window("tab"), driver.current_target]
 
         idx = 0
@@ -91,9 +99,11 @@ async def main():
 
 
 if __name__ == "__main__":
+    # startup server in a new process
     proc = multiprocessing.Process(target=server.serve)
     proc.start()
     time.sleep(3)
+
     try:
         asyncio.run(main())
     finally:
