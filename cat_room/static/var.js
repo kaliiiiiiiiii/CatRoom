@@ -10,3 +10,6 @@ const username_input = document.getElementById("username-input")
 const bar_username = document.getElementById("bar_username")
 const blur = document.getElementById("blur")
 const warn = document.getElementById("warning")
+const userList = document.getElementById("userList")
+
+userColors = {}

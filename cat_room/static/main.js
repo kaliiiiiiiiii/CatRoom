@@ -93,6 +93,13 @@ function onJoin(user, timeStamp){
     span.append(timeElem)
 
     content.append(span)
+
+    // Add to userList
+
+    span = document.createElement("span");
+    span.setAttribute("class", "user");
+    span.textContent = user;
+    userList.append(span);
     console.log(user)
 
     if (_scroll) {
@@ -136,6 +143,13 @@ function onLeave(user, timeStamp){
     span.append(timeElem)
 
     content.append(span)
+
+    // Remove from userList
+    let u = document.getElementsByClassName("user")
+    for(let i in u) {
+        if(u[i].innerHTML !== user) {continue;}
+        u[i].parentNode.removeChild(u[i]);
+    }
 
     if (_scroll) {
         scroll()
@@ -186,6 +200,18 @@ async function main(){
                 warn.style.display = "none";
                 inp.focus()
                 bar_username.textContent = username
+                con.fetchUsers().then((users)=>{
+                    for(let i of users) {
+                        if(i == username) {continue;}
+                        let span = document.createElement("span");
+                        span.setAttribute("class", "user");
+                        span.textContent = i;
+                        userList.append(span);
+                        console.log(i);
+
+                        userColors[user] = 0;
+                    }
+                })
 
             })
             .catch((e)=>{
