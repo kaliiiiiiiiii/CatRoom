@@ -50,7 +50,6 @@ function onMessage(user, timeStamp, message, id){
         span.append(messageElem)
     };
 
-
     span_wrapper.append(span)
 
     content.append(span_wrapper)
@@ -71,6 +70,8 @@ function onJoin(user, timeStamp){
         _scroll = true
     }
 
+    userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
+
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
@@ -81,6 +82,7 @@ function onJoin(user, timeStamp){
 
     let userNameElem = document.createElement("span")
     userNameElem.setAttribute("class", "user-join")
+    userNameElem.setAttribute("style", "color:" + userColors[user]);
     userNameElem.textContent = user
     span.append(userNameElem)
 
@@ -97,8 +99,6 @@ function onJoin(user, timeStamp){
     content.append(span)
 
     // Add to userList
-
-    userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
 
     span = document.createElement("span");
     span.setAttribute("class", "user");
@@ -135,6 +135,7 @@ function onLeave(user, timeStamp){
 
         let userNameElem = document.createElement("span")
         userNameElem.setAttribute("class", "user-leave")
+        userNameElem.setAttribute("style", "color:" + userColors[user]);
         userNameElem.textContent = user
         span.append(userNameElem)
 

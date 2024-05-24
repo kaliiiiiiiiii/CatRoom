@@ -58,8 +58,15 @@ body {
 }
 
 #content, input, #inp {
-  padding: 20px;
-  border: 1px solid black;
+    padding: 20px;
+}
+
+input, #inp {
+    border: 1px solid white;
+}
+
+#content {
+    border-right: 1px solid white;
 }
 
 #content {
@@ -119,15 +126,16 @@ input, #inp {
     color: white;
 }
 
+input:focus, #inp:focus {
+    outline: none;
+    border-color: #adf;
+}
+
 #inp {
     max-height: 200px;
     overflow-y: auto;
 }
 
-input:focus {
-    outline: none;
-    border-color: white;
-}
 
 .message, .message-self, .message-w-username, .join {
     margin-bottom: 3px;
@@ -140,7 +148,6 @@ input:focus {
 .username {
     font-size: 1.2em;
     margin-bottom: 0.5%;
-    display: block;
     font-weight: bold;
     color: #aff;
 }
@@ -193,7 +200,7 @@ input:focus {
     display: inline-block;
     border: solid white 1px;
     border-radius: 5px;
-    padding: 4px;
+    padding: 6px;
     background-color: #444;
     max-width: 100%; /* Now it can't be over 100% */
 }
