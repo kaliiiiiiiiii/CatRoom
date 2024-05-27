@@ -1,3 +1,4 @@
+// global variables & constants used
 let username = ""
 let shift = false
 let lastUser = ""
