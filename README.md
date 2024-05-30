@@ -44,3 +44,4 @@ then, open [localhost](http://localhost) to view the chatroom
     <img src="assets/register_screenshot_mobile.png" width="49%"/>
     <img src="assets/example_screenshot_mobile.png" width="49%"/>
 </p>
+<img src="assets/example_screenshot_mobile_user_list.png" width="49%"/>

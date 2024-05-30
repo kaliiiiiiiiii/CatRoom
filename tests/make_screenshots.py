@@ -88,6 +88,10 @@ async def main():
             await enter(tab)
 
             await asyncio.sleep(1)
+            if idx == 0:
+                inp = await tab.find_element(By.ID, "inp", timeout=2)
+                await inp.write("Hello?")
+                await enter(tab)
             idx += 1
         for messages, tab in zip(messages, tabs):
             tab: Target
@@ -105,6 +109,11 @@ async def main():
         await emulate_mobile(tabs[0])
         await asyncio.sleep(1)
         await tabs[0].save_screenshot(assets + "/example_screenshot_mobile.png")
+
+        switch = await tabs[0].find_element(By.XPATH, '//*[@id="userListButton"]')
+        await switch.click()
+        await asyncio.sleep(1)
+        await tabs[0].save_screenshot(assets + "/example_screenshot_mobile_user_list.png")
 
 
 if __name__ == "__main__":
