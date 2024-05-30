@@ -248,6 +248,15 @@ input:focus, #inp:focus {
     padding: 7px;
     border: 1px solid white;
     border-color: white;
-    backdrop-filter: blur(1px);
-    background-color: rgb(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    background-color: rgb(200, 200, 200, 0.2);
+}
+
+.system {
+    align-self: center;
+    padding: 5px;
+    background-color: #d5d5d7;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }

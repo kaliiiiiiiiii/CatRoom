@@ -17,7 +17,7 @@ function onMessage(user, timeStamp, message, id){
     let span_wrapper = document.createElement("span")
     span_wrapper.setAttribute("id", id)
 
-    var timeStampStr = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+    var timeStampStr = timeStamp.toLocaleString([], {weekday: 'short', hour: '2-digit', minute: '2-digit'})
     if(user !== username && lastUser !== user) {
         // message not from this user
         // and
@@ -89,17 +89,16 @@ function onJoin(user, timeStamp){
     }
 
     // assign random color for user
-    // @micha todo: move to function randomColor
-    userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
+    randomColor(user);
 
     // user joined element
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
-    // @micha todo: add comment for this
+    // Span prefix before username ">   "
     let spanPrefix = document.createElement("span")
     spanPrefix.setAttribute("class", "user-join-affix")
-    spanPrefix.innerHTML = "> &nbsp;"
+    spanPrefix.innerHTML = "> &nbsp;" // &nbsp; = non breaking space
     span.append(spanPrefix)
 
     // username
@@ -118,7 +117,7 @@ function onJoin(user, timeStamp){
     // timeStamp
     let timeElem = document.createElement("span")
     timeElem.setAttribute("class","time-stamp")
-    timeElem.textContent = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+    timeElem.textContent = timeStamp.toLocaleString([], {weekday: 'short', hour: '2-digit', minute: '2-digit'})
     span.append(timeElem)
 
     content.append(span)
@@ -177,7 +176,7 @@ function onLeave(user, timeStamp){
         // timeStamp
         let timeElem = document.createElement("span")
         timeElem.setAttribute("class","time-stamp")
-        timeElem.textContent = timeStamp.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+        timeElem.textContent = timeStamp.toLocaleString([], {weekday: 'short', hour: '2-digit', minute: '2-digit'})
         span.append(timeElem)
 
         content.append(span)
@@ -256,6 +255,12 @@ async function main(){
                 inp.focus()
                 bar_username.textContent = username
 
+                let span = document.createElement("span")
+                span.setAttribute("class", "system")
+                span.textContent = "Chat Begin"
+
+                content.append(span)
+
                 // get currently connected users, visualize and assign colors
                 con.fetchUsers().then((users)=>{
                     for(let user of users) {
@@ -263,8 +268,7 @@ async function main(){
                         // visualize & add to currently connected users
                         if(user == username) {continue;}
 
-                        // @micha todo: move to function randomColor
-                        userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
+                        randomColor(user);
 
                         let span = document.createElement("span");
                         span.setAttribute("class", "user");
@@ -291,6 +295,10 @@ async function main(){
 };
 
 main()
+
+function randomColor(user) {
+    userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
+}
 
 function warn_popUp() {
     warn.style.display = "block";
