@@ -62,8 +62,10 @@ class Connection {
   async fetchUsers(){
     // gets the list of already connected users form the server
     // returns: Set
-    var request = await fetch("get_users");
-    this.users = new Set(await request.json());
+    var response = await fetch("get_users");
+    if (response.status != 404){
+        this.users = new Set(await response.json());
+    }
     return this.users
   }
 

@@ -1,0 +1,44 @@
+name: CatRoom CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  Screenshot:
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: ['3.10']
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium-driverless
+        pip install -r requirements.txt
+        python -c "import os; os.environ['TOKENIZERS_PARALLELISM'] = 'false'"
+    - name: Install Chrome Browser
+      uses: browser-actions/setup-chrome@v1
+    - name: Screenshot
+      run: |
+        Xvfb -ac :100 -screen 0 1280x1024x16 > /dev/null 2>&1 &
+        export DISPLAY=:100.0
+        python tests/make_screenshots.py
+    - name: Commit report
+      run: |
+          git config --global user.name 'kaliiiiiiiiii'
+          git config --global user.email 'kaliiiiiiiiii@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git add assets/*.png
+          git commit -am "Automated screenshot"
+          git push
