@@ -1,9 +1,28 @@
+/* GENERAL */
+
 body {
   background-color: #323232;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   padding: 0;
   margin: 0;
+}
+
+/* Scroll Bar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #555;
+}
+
+ ::-webkit-scrollbar-thumb {
+  background: #578;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #adf;
 }
 
 #main {
@@ -18,46 +37,26 @@ body {
   height: 100vh; /* Full viewport height */
 }
 
+input, #inp {
+    background-color: #444;
+    color: white;
+}
+
+input:focus, #inp:focus {
+    outline: none;
+    border-color: #adf;
+}
+
+#inp {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* MESSAGES */
+
 #wrapper-messages {
     width: 75%;
     background-color: #2a2a2a;
-}
-
-#wrapper-users {
-    word-wrap: break-word;
-    width: 25%;
-}
-
-#userList {
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.user {
-    padding: 1% 5%;
-    border-bottom: 1px dashed #444;
-    font-size: 1.2em;
-}
-
-@media screen and (max-aspect-ratio: 1 / 1) {
-    #wrapper-users {
-        display: none;
-    }
-    #wrapper-messages {
-        width: 100%;
-    }
-    #userListButton {
-        display: block !important;
-    }
-}
-
-#bar_username {
-    padding: 10px 0;
-    text-align: center;
-    background-color: #232323;
-    font-size: 1.2em;
-    color: #ffa;
 }
 
 #content, input, #inp {
@@ -79,66 +78,6 @@ input, #inp {
     display: flex;
     flex-flow: column;
 }
-
-#blur {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    background-color: rgb(255, 255, 255, 0.1);
-}
-
-#pop-up {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30%;
-    min-width: 200px;
-    min-height: 50px;
-    text-align: center;
-    background-color: #333;
-    border: solid #444 2px;
-    border-radius: 10px;
-    padding: 14px;
-}
-
-#warning {
-    display: none;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    width: 30%;
-    text-align: center;
-    background-color: #d00;
-    border: solid #444 2px;
-    border-radius: 10px;
-    padding: 1%;
-}
-
-#username-input{
-    width: 80%;
-    background-color: #444;
-}
-
-input, #inp {
-    background-color: #444;
-    color: white;
-}
-
-input:focus, #inp:focus {
-    outline: none;
-    border-color: #adf;
-}
-
-#inp {
-    max-height: 200px;
-    overflow-y: auto;
-}
-
 
 .message, .message-self, .message-w-username, .join {
     margin-bottom: 3px;
@@ -223,21 +162,85 @@ input:focus, #inp:focus {
     bottom-border: 1px dashed #4b4b4b;
 }
 
-/* Scroll Bar */
-::-webkit-scrollbar {
-  width: 12px;
+.system {
+    align-self: center;
+    padding: 5px;
+    border: 1px dashed #d5d5d7;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
-::-webkit-scrollbar-track {
-  background: #555;
+/* USERS */
+
+#wrapper-users {
+    word-wrap: break-word;
+    width: 25%;
 }
 
- ::-webkit-scrollbar-thumb {
-  background: #578;
+#userList {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #adf;
+.user {
+    padding: 1% 5%;
+    border-bottom: 1px dashed #444;
+    font-size: 1.2em;
+}
+
+#bar_username {
+    padding: 10px 0;
+    text-align: center;
+    background-color: #232323;
+    font-size: 1.2em;
+    color: #ffa;
+}
+
+/* POP UPS & USERNAME INPUT */
+
+#blur {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
+#pop-up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    min-width: 200px;
+    min-height: 50px;
+    text-align: center;
+    background-color: #333;
+    border: solid #444 2px;
+    border-radius: 10px;
+    padding: 14px;
+}
+
+#warning {
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 30%;
+    text-align: center;
+    background-color: #d00;
+    border: solid #444 2px;
+    border-radius: 10px;
+    padding: 1%;
+}
+
+#username-input{
+    width: 80%;
+    background-color: #444;
 }
 
 #userListButton {
@@ -246,17 +249,23 @@ input:focus, #inp:focus {
     right: 0%;
     top: 0%;
     padding: 7px;
-    border: 1px solid white;
-    border-color: white;
+    border: 1px solid black;
     backdrop-filter: blur(2px);
-    background-color: rgb(200, 200, 200, 0.2);
+    background-color: rgb(255, 255, 255, 0.7);
+    color: black;
+    border-radius: 0 0 0 5px;
 }
 
-.system {
-    align-self: center;
-    padding: 5px;
-    background-color: #d5d5d7;
-    color: black;
-    border-radius: 5px;
-    margin-bottom: 5px;
+/* ASPECT RATIO */
+
+@media screen and (max-aspect-ratio: 1 / 1) {
+    #wrapper-users {
+        display: none;
+    }
+    #wrapper-messages {
+        width: 100%;
+    }
+    #userListButton {
+        display: block !important;
+    }
 }
