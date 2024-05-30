@@ -40,17 +40,20 @@ body {
     font-size: 1.2em;
 }
 
-@media screen and (max-aspect-ratio: 3 / 2) {
+@media screen and (max-aspect-ratio: 1 / 1) {
     #wrapper-users {
-        display: none !important;
+        display: none;
     }
     #wrapper-messages {
-        width: 100% !important;
+        width: 100%;
+    }
+    #userListButton {
+        display: block !important;
     }
 }
 
 #bar_username {
-    padding: 5% 0;
+    padding: 10px 0;
     text-align: center;
     background-color: #232323;
     font-size: 1.2em;
@@ -235,4 +238,16 @@ input:focus, #inp:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #adf;
+}
+
+#userListButton {
+    display: none;
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    padding: 7px;
+    border: 1px solid white;
+    border-color: white;
+    backdrop-filter: blur(1px);
+    background-color: rgb(255, 255, 255, 0.1);
 }

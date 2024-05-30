@@ -246,3 +246,18 @@ main()
 function warn_popUp() {
     warn.style.display = "block";
 }
+
+function userListSidebar() {
+    if(userListBool) {
+        wrapperMessages.style.display = "none";
+        wrapperUsers.style.display = "flex";
+        wrapperUsers.style.width = "100%";
+        userListButton.innerHTML = "Chat"
+    } else {
+        wrapperMessages.style.display = "flex";
+        wrapperUsers.style.display = "none";
+        wrapperUsers.style.width = "25%";
+        userListButton.innerHTML = "User list"
+    }
+    userListBool = !userListBool
+}
