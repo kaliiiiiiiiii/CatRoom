@@ -13,10 +13,8 @@ function onMessage(user, timeStamp, message, id){
 
     var timeStampStr = timeStamp.toLocaleString([], {weekday: 'short', hour: '2-digit', minute: '2-digit'})
     if(user !== username && lastUser !== user) {
-        // message not from this user
-        // and
-        // message not from the last user message
-        // do show username
+        // username: this User | user: user who sent message
+        // => show username
         span_wrapper.setAttribute("class", "message-w-username")
         let userNameElem = document.createElement("span")
         userNameElem.setAttribute("class", "username")
@@ -25,10 +23,9 @@ function onMessage(user, timeStamp, message, id){
         span.append(userNameElem)
 
     } else if(user == username) {
-        // user is this user
-        // don't show username
+        // if user is this user
+        // => don't show username
         span_wrapper.setAttribute("class", "message-self")
-
     } else {
         // last user message is user
         // => don't show username
@@ -36,9 +33,8 @@ function onMessage(user, timeStamp, message, id){
     }
 
     if(user !== lastUser || lastTimeStampStr !== timeStampStr) {
-        // user is not same user as last message
-        // last timestamp is different form current
-        // timestampStr in minutes
+        // user who sent message is not the same user as user of the last message
+        // last timestamp is different form current timeStamp (in minutes)
         // => show the timestamp
         let timeElem = document.createElement("span")
         timeElem.setAttribute("class","time-stamp")
@@ -136,9 +132,10 @@ function onLeave(user, timeStamp){
         let span = document.createElement("span")
         span.setAttribute("class", "join")
 
+        // Span prefix before username ">  "
         let spanPrefix = document.createElement("span")
         spanPrefix.setAttribute("class", "user-leave-affix")
-        spanPrefix.innerHTML = "> &nbsp;"
+        spanPrefix.innerHTML = "> &nbsp;" // &nbsp; = non breaking space
         span.append(spanPrefix)
 
         // username
