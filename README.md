@@ -1,6 +1,5 @@
 # CatRoom
-
-Note: This is a school-project
+register [demo-page](cat_room/static)
 
 #### Dependencies
 
