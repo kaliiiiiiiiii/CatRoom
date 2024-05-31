@@ -1,5 +1,5 @@
 # CatRoom
-register [demo-page](cat_room/static)
+register [demo-page]([cat_room/static](https://kaliiiiiiiiii.github.io/CatRoom/cat_room/static/))
 
 #### Dependencies
 
