@@ -7,13 +7,15 @@ Note: This is a school-project
 - [Python ~= 3.10](https://www.python.org/downloads/release/python-31011/)
 
 #### Startup server
-download with
+(assumes [git-cli](https://git-scm.com/download/win) is installed) \
+download and install requirements with
 ```shell
-git clone kaliiiiiiiiii/CatRoom
+git clone https://github.com/kaliiiiiiiiii/CatRoom.git
 cd CatRoom
+python -m pip install --upgrade -r requirements.txt
 ```
 
-start server from cmd \
+start server \
 (serves on all interfaces => `LAN`//`WLAN`)
 ```shell
 python main.py
@@ -45,3 +47,8 @@ then, open [localhost](http://localhost) to view the chatroom
     <img src="assets/example_screenshot_mobile.png" width="49%"/>
 </p>
 <img src="assets/example_screenshot_mobile_user_list.png" width="49%"/>
+
+## Authors
+
+- Aurin Aegerter (aka Steve)
+- Micha

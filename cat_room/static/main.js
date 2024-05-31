@@ -12,8 +12,8 @@ function onMessage(user, timeStamp, message, id){
     span_wrapper.setAttribute("id", id)
 
     var timeStampStr = timeStamp.toLocaleString([], {weekday: 'short', hour: '2-digit', minute: '2-digit'})
+    // username: this User | user: user who sent message
     if(user !== username && lastUser !== user) {
-        // username: this User | user: user who sent message
         // => show username
         span_wrapper.setAttribute("class", "message-w-username")
         let userNameElem = document.createElement("span")
@@ -23,17 +23,12 @@ function onMessage(user, timeStamp, message, id){
         span.append(userNameElem)
 
     } else if(user == username) {
-        // if user is this user
-        // => don't show username
         span_wrapper.setAttribute("class", "message-self")
     } else {
-        // last user message is user
-        // => don't show username
         span_wrapper.setAttribute("class", "message")
     }
 
     if(user !== lastUser || lastTimeStampStr !== timeStampStr) {
-        // user who sent message is not the same user as user of the last message
         // last timestamp is different form current timeStamp (in minutes)
         // => show the timestamp
         let timeElem = document.createElement("span")
@@ -47,7 +42,7 @@ function onMessage(user, timeStamp, message, id){
 
     // message element
     for (line of message.split("\n")){
-        // span element for each line
+        // add span element for each line
         let messageElem = document.createElement("span")
         messageElem.setAttribute("class","message-content")
         messageElem.textContent = line
@@ -183,15 +178,12 @@ function scroll() {
 }
 
 async function main(){
-    // the main function
-
     const con = new Connection(onJoin, onMessage, onLeave);
     username_input.focus()
 
     inp.addEventListener("keydown", (event) => {
-      // keydown on message Input
+      // on ChatMessage Input
       if ((event.key === 'Enter'  && event.shiftKey) || event.key !== 'Enter') {
-        // SHIFT + ENTER or (not ENTER) pressed
         return;
       };
       // ENTER without SHIFT pressed, send message
@@ -209,7 +201,7 @@ async function main(){
     inp.addEventListener("keyup",(event)=>{
       // after message sent
       if ((event.key === 'Enter'  && event.shiftKey) || event.key !== 'Enter') {
-        // // SHIFT + ENTER or (not ENTER) pressed (=> no message sent)
+        // => no message sent
         return;
       };
 
@@ -234,12 +226,12 @@ async function main(){
                 inp.focus()
                 bar_username.textContent = username
 
-                // get currently connected users, visualize and assign colors
                 con.fetchUsers().then((users)=>{
                     for(let user of users) {
 
-                        // visualize & add to currently connected users
                         if(user == username) {continue;}
+
+                        // visualize and assign colors to user
 
                         randomColor(user);
 
@@ -259,6 +251,9 @@ async function main(){
                     warn_popUp()
                 }else if (e.message == "invalid username"){
                     warn.innerHTML = "Username should be between 5 - 30 chars without whitespaces"
+                    warn_popUp()
+                }else if(e.target.toString() === '[object WebSocket]'){
+                    warn.innerHTML = "Server refused connection, this is likely static HTML"
                     warn_popUp()
                 }
                 else{console.error(e)}

@@ -4,7 +4,7 @@ let shift = false
 let lastUser = ""
 let lastTimeStampStr = ""
 
-let userListBool = true // true = open
+let userListBool = true // true => userList popup is not shown
 
 const content = document.getElementById("content")
 const inp = document.getElementById("inp");

@@ -27,7 +27,6 @@ def is_visible(string: str) -> bool:
 
 
 async def try_send(_ws: web.WebSocketResponse, _data: dict) -> None:
-    # try to send a message to a websocket, suppresses ConnectionResetError
     try:
         await _ws.send_json(_data)
     except ConnectionResetError:

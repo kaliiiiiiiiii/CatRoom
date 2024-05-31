@@ -9,3 +9,4 @@
     > ```shell
     > python -m pip install --upgrade selenium-driverless
     > ```
+    > and Google-Chrome or Chromium to be installed
