@@ -39,7 +39,7 @@ class Server:
     the Server Class
     """
 
-    def __init__(self, port: int = 80, host=None) -> None:
+    def __init__(self, port: int = 80, host="localhost") -> None:
         self._static_dir = str(pathlib.Path(__file__).parent.resolve()) + "/static"
         self.port = port
         self._host = host
