@@ -1,13 +1,7 @@
 function onMessage(user, timeStamp, message, id){
     // message received from server broadcast
 
-    let _scroll = false
-
-    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
-        // scroll when being scrolled close to bottom
-        // @micha todo: move to  function checkScrollNeeded
-        _scroll = true
-    }
+    let _scroll = checkScrollNeeded()
 
     // create message element
     let span = document.createElement("span")
@@ -79,14 +73,7 @@ function onJoin(user, timeStamp){
     // onJoin received from server broadcast
     lastUser = ""
 
-    let _scroll = false
-
-    if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50 || user === lastUser) {
-        // already scrolled way down
-        // @micha todo: why || user === lastUser when lastUser = "" ?
-        // @micha todo: move to  function checkScrollNeeded
-        _scroll = true
-    }
+    let _scroll = checkScrollNeeded()
 
     // assign random color for user
     randomColor(user);
@@ -95,7 +82,7 @@ function onJoin(user, timeStamp){
     let span = document.createElement("span")
     span.setAttribute("class", "join")
 
-    // Span prefix before username ">   "
+    // Span prefix before username ">  "
     let spanPrefix = document.createElement("span")
     spanPrefix.setAttribute("class", "user-join-affix")
     spanPrefix.innerHTML = "> &nbsp;" // &nbsp; = non breaking space
@@ -142,13 +129,7 @@ function onLeave(user, timeStamp){
             return;
         }
 
-        let _scroll = false
-
-        if(content.scrollHeight - content.offsetHeight - content.scrollTop <= 50) {
-            // if already scrolled way down
-            // @micha todo: move to  function checkScrollNeeded
-            _scroll = true
-        }
+        let _scroll = checkScrollNeeded()
 
         // user left element
         lastUser = ""
@@ -200,7 +181,8 @@ function onLeave(user, timeStamp){
 };
 
 function scroll() {
-        content.scrollTo(0, content.scrollHeight);
+    // scroll to bottom
+    content.scrollTo(0, content.scrollHeight);
 }
 
 async function main(){
@@ -255,12 +237,6 @@ async function main(){
                 inp.focus()
                 bar_username.textContent = username
 
-                let span = document.createElement("span")
-                span.setAttribute("class", "system")
-                span.textContent = "Chat Begin"
-
-                content.append(span)
-
                 // get currently connected users, visualize and assign colors
                 con.fetchUsers().then((users)=>{
                     for(let user of users) {
@@ -300,17 +276,24 @@ function randomColor(user) {
     userColors[user] = "rgb("+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+","+Math.ceil(Math.random() * 155 + 100)+")";
 }
 
+function checkScrollNeeded() {
+    // Scroll when almost at bottom
+    return (content.scrollHeight - content.offsetHeight - content.scrollTop <= 50)
+}
+
 function warn_popUp() {
     warn.style.display = "block";
 }
 
 function userListSidebar() {
     if(userListBool) {
+        // show userList
         wrapperMessages.style.display = "none";
         wrapperUsers.style.display = "flex";
         wrapperUsers.style.width = "100%";
         userListButton.innerHTML = "Chat"
     } else {
+        // hide userList
         wrapperMessages.style.display = "flex";
         wrapperUsers.style.display = "none";
         wrapperUsers.style.width = "25%";

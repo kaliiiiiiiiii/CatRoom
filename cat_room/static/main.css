@@ -122,8 +122,6 @@ input, #inp {
     align-self: end;
 }
 
-
-
 .textarea {
   display: block;
   width: 100%;
@@ -131,11 +129,6 @@ input, #inp {
   resize: y;
   min-height: 40px;
   line-height: 20px;
-}
-
-.textarea[contenteditable]:empty::before {
-  content: "Message";
-  color: gray;
 }
 
 .span_minor {
