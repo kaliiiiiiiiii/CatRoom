@@ -50,4 +50,4 @@ then, open [localhost](http://localhost) to view the chatroom
 ## Authors
 
 - Aurin Aegerter (aka Steve)
-- Micha
+- The-AnOnym
